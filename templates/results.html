@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extraction Results - Cyberpunk</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #000, #111);
+      color: #FFD700;
+      font-family: 'Orbitron', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .container-glow {
+      background: rgba(20, 20, 20, 0.9);
+      border: 2px solid #FFD700;
+      box-shadow: 0 0 25px #FFD700;
+      border-radius: 20px;
+      padding: 40px;
+      margin-top: 40px;
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    h2 {
+      text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .btn-glow {
+      background: transparent;
+      color: #FFD700;
+      border: 2px solid #FFD700;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 0 15px #FFD700;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .btn-glow:hover {
+      background: #FFD700;
+      color: #000;
+      box-shadow: 0 0 35px #FFD700;
+      transform: scale(1.08);
+    }
+
+    .text-preview {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #FFD700;
+      border-radius: 10px;
+      padding: 20px;
+      color: #FFD700;
+      box-shadow: 0 0 15px #FFD700;
+      text-align: left;
+      max-height: 300px;
+      overflow-y: auto;
+      animation: floatUp 1.5s ease-in-out both;
+    }
+
+    .card-cyber {
+      background: rgba(25, 25, 25, 0.9);
+      border: 1px solid #FFD700;
+      box-shadow: 0 0 15px #FFD700;
+      transition: 0.3s;
+      border-radius: 10px;
+    }
+
+    .card-cyber:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px #FFD700;
+    }
+
+    select, input {
+      background-color: #000;
+      color: #FFD700;
+      border: 1px solid #FFD700;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #FFD700;
+    }
+
+    select:focus, input:focus {
+      outline: none;
+      box-shadow: 0 0 20px #FFD700;
+      transform: scale(1.02);
+    }
+
+    .result-item {
+      background: rgba(0, 0, 0, 0.6);
+      border-left: 4px solid #FFD700;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 5px;
+    }
+
+    mark {
+      background-color: #FFD700;
+      color: #000;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container container-glow">
+    <h2><i class="bi bi-terminal"></i> Extraction Results</h2>
+
+    <!-- Download Links -->
+    <div class="row g-3 justify-content-center mb-4">
+      <div class="col-md-4">
+        <div class="card card-cyber p-3 text-center">
+          <i class="bi bi-file-earmark-text fs-2 mb-2"></i>
+          <h5>Extracted Text</h5>
+          <a href="/download/{{ text_filename }}" download>
+            <button class="btn btn-glow mt-2">Download Text</button>
+          </a>
+        </div>
+      </div>
+
+      {% if table_files %}
+      {% for table_file in table_files %}
+      <div class="col-md-4">
+        <div class="card card-cyber p-3 text-center">
+          <i class="bi bi-table fs-2 mb-2"></i>
+          <h5>Table {{ loop.index }}</h5>
+          <a href="/download/{{ table_file }}" download>
+            <button class="btn btn-glow mt-2">Download CSV</button>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Text Preview -->
+    <div class="text-preview mb-4">
+      <h4><i class="bi bi-eye"></i> Text Preview</h4>
+      <p>{{ extracted_text }}</p>
+    </div>
+
+    <!-- Control Panels -->
+    <div class="row g-3 justify-content-center">
+      <!-- Translation -->
+      <div class="col-md-4">
+        <div class="card card-cyber p-3 text-center">
+          <i class="bi bi-translate fs-3 mb-2"></i>
+          <h5>Translation</h5>
+          <select id="targetLang" class="form-select mb-2">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="it">Italian</option>
+            <option value="pt">Portuguese</option>
+            <option value="ru">Russian</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
+            <option value="zh-cn">Chinese (Simplified)</option>
+            <option value="ar">Arabic</option>
+          </select>
+          <button class="btn btn-glow w-100" onclick="translateText()">Translate</button>
+          <div id="translationResult" class="text-preview mt-3" style="display:none;"></div>
+        </div>
+      </div>
+
+      <!-- Text-to-Speech -->
+      <div class="col-md-4">
+        <div class="card card-cyber p-3 text-center">
+          <i class="bi bi-volume-up fs-3 mb-2"></i>
+          <h5>Text-to-Speech</h5>
+          <button class="btn btn-glow w-100" onclick="textToSpeech()">Convert to Speech</button>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="col-md-4">
+        <div class="card card-cyber p-3 text-center">
+          <i class="bi bi-search fs-3 mb-2"></i>
+          <h5>Search</h5>
+          <input type="text" id="searchQuery" class="form-control mb-2" placeholder="Enter search term">
+          <button class="btn btn-glow w-100" onclick="searchText()">Search</button>
+          <div id="searchResults" class="mt-3 text-preview" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="/">
+        <button class="btn btn-glow btn-lg"><i class="bi bi-upload"></i> Upload Another File</button>
+      </a>
+    </div>
+
+    <footer>
+      ⚡ Designed with Cyberpunk Energy ⚡
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const extractedText = `{{ extracted_text }}`;
+
+    function translateText() {
+      const targetLang = document.getElementById('targetLang').value;
+      const translationResult = document.getElementById('translationResult');
+      
+      fetch('/translate', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ text: extractedText, target_lang: targetLang })
+      })
+      .then(response => response.json())
+      .then(data => {
+        translationResult.style.display = 'block';
+        translationResult.innerHTML = data.translated_text 
+          ? `<h5>Translated Text:</h5><p>${data.translated_text}</p>`
+          : `<p>Error: ${data.error}</p>`;
+      })
+      .catch(error => {
+        translationResult.style.display = 'block';
+        translationResult.innerHTML = `<p>Error: ${error}</p>`;
+      });
+    }
+
+    function textToSpeech() {
+      fetch('/text_to_speech', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ text: extractedText })
+      })
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'speech.wav';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch(error => alert('Error generating speech: ' + error.message));
+    }
+
+    function searchText() {
+      const query = document.getElementById('searchQuery').value;
+      const searchResults = document.getElementById('searchResults');
+      
+      if (!query) return alert('Please enter a search term');
+
+      fetch('/search', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ text: extractedText, query })
+      })
+      .then(response => response.json())
+      .then(data => {
+        searchResults.style.display = 'block';
+        if (data.results && data.results.length > 0) {
+          searchResults.innerHTML = '<h5>Search Results:</h5>' +
+            data.results.map(r => `<div class="result-item">Line ${r.line_number}: ${r.content}</div>`).join('');
+        } else {
+          searchResults.innerHTML = '<p>No results found</p>';
+        }
+      })
+      .catch(error => {
+        searchResults.style.display = 'block';
+        searchResults.innerHTML = `<p>Error: ${error}</p>`;
+      });
+    }
+  </script>
+</body>
+</html>

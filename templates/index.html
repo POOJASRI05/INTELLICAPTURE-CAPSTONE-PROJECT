@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Table Extraction - Cyberpunk</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #000, #111);
+      color: #FFD700;
+      font-family: 'Orbitron', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .container-glow {
+      background: rgba(20, 20, 20, 0.9);
+      border: 2px solid #FFD700;
+      box-shadow: 0 0 25px #FFD700;
+      border-radius: 20px;
+      padding: 50px;
+      width: 90%;
+      max-width: 600px;
+      transition: 0.3s;
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    .container-glow:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 40px #FFD700;
+    }
+
+    h2 {
+      text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    input[type="file"] {
+      background-color: transparent;
+      border: 1px solid #FFD700;
+      color: #FFD700;
+      padding: 10px;
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #FFD700;
+    }
+
+    input[type="file"]:hover,
+    input[type="file"]:focus {
+      box-shadow: 0 0 20px #FFD700;
+      transform: scale(1.02);
+    }
+
+    button {
+      background: transparent;
+      color: #FFD700;
+      border: 2px solid #FFD700;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 0 20px #FFD700;
+      border-radius: 8px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background: #FFD700;
+      color: #000;
+      box-shadow: 0 0 35px #FFD700;
+      transform: scale(1.1);
+    }
+
+    .feature-card {
+      border: 1px solid #FFD700;
+      border-radius: 10px;
+      background: rgba(20, 20, 20, 0.8);
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px #FFD700;
+      animation: floatUp 1.5s ease-in-out both;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 25px #FFD700;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon-glow {
+      color: #FFD700;
+      font-size: 2.5rem;
+      text-shadow: 0 0 20px #FFD700;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-glow text-center">
+    <h2><i class="bi bi-file-earmark-binary"></i> PDF Table & Text Extraction</h2>
+    
+    <form action="/" method="POST" enctype="multipart/form-data" class="mb-4">
+      <div class="mb-3">
+        <input type="file" name="file" required>
+      </div>
+      <button type="submit" class="btn btn-outline-warning btn-lg">
+        <i class="bi bi-lightning-charge"></i> Extract & Process
+      </button>
+    </form>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="feature-card p-3 h-100">
+          <i class="bi bi-table icon-glow"></i>
+          <h5>Table Extraction</h5>
+          <p>Extract complex tables from PDFs effortlessly.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="feature-card p-3 h-100">
+          <i class="bi bi-file-earmark-text icon-glow"></i>
+          <h5>Text Extraction</h5>
+          <p>Retrieve all text content with high precision.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="feature-card p-3 h-100">
+          <i class="bi bi-translate icon-glow"></i>
+          <h5>Translation</h5>
+          <p>Instantly translate extracted content.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="feature-card p-3 h-100">
+          <i class="bi bi-volume-up icon-glow"></i>
+          <h5>Text-to-Speech</h5>
+          <p>Convert text into speech in one click.</p>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="feature-card p-3">
+          <i class="bi bi-search icon-glow"></i>
+          <h5>Search</h5>
+          <p>Quickly find specific words or data points.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="mt-4">
+      <p>⚡ Designed with Cyberpunk Energy ⚡</p>
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
